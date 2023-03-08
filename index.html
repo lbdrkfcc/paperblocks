@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        html {
+            font-family: sans-serif;
+            font-size: 16px;
+        }
+        body {
+            margin: 0;
+            background: #efebde;
+        }
+        .white {
+            color: #fefefc;
+        }
+        .blue {
+            color: #67c5e0;
+        }
+        .green {
+            color: #6bb87c;
+        }
+        .purple {
+            color: #975fa0;
+        }   
+        .orange {
+            color: #f2996e;
+        }
+        .pink {
+            color: #f2996e;
+        }
+        .modal {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 520px;
+            height: 100vh;
+            margin: auto;
+            border-left: 1px solid #000;
+            border-right: 1px solid #000;
+        }
+        .btn {
+            cursor: pointer;
+            border: none;
+            border-radius: 0;
+            display: inline-block;
+            /* height: 36px; */
+            /* line-height: 36px; */
+            padding: 8px 16px;
+            text-transform: uppercase;
+            vertical-align: middle;
+            -webkit-tap-highlight-color: transparent;
+            font-size: 18px;
+            outline: 0;
+            text-decoration: none;
+            color: #000;
+            background-color: transparent;
+            text-align: center;
+            /* letter-spacing: .5px; */
+            /* box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%); */
+        }
+        .btn:active {
+            background: #000;
+            color: #fff;
+        }
+        .btn-long {
+            width: 100%;
+            padding: 16px;
+        }
+        .bt {
+            border-top: 1px solid #000;
+        }
+        .bb {
+            border-bottom: 1px solid #000;
+        }
+        .bl {
+            border-left: 1px solid #000;
+        }
+        .br {
+            border-right: 1px solid #000;
+        }
+        .bn {
+            border: none;
+        }
+        .modal-header {
+            /* padding: 6px 8px; */
+            display: flex;
+            justify-content: end;
+        }
+        .modal-body {
+            /* padding: 4px 8px; */
+            flex-grow: 2;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-footer {
+            /* padding: 4px 8px; */
+            text-align: center;
+            display: flex;
+        }
+        .goals {
+
+        }
+        .goal {
+            display: flex;
+            cursor: pointer;
+            padding: 10px 8px;
+        }
+        .goal-checkbox {
+            display: none;
+        }
+        .goal-checkbox:checked + .goal-score.dark {
+            color: transparent;
+            background: transparent;
+        }
+        .goal-score {
+            font-family: monospace;
+            padding: 8px 8px;
+            background: #bebe88;
+            width: 38px;
+            height: 30px;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 15px;
+            border-radius: 112px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            margin-top: 2px;
+            margin-right: 6px;
+        }
+        .goal-score.dark {
+            background: #000;
+            color: #fff;
+        }
+        .goal-text {
+            padding: 6px 4px;
+        }
+        .cards {
+            display: flex;
+            flex-grow: 2;
+        }
+        .cards-block {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 2;
+            width: 100%;
+            padding: 12px 12px;
+            font-family: monospace;
+            font-size: 48px;
+            background-repeat: no-repeat;
+            background-position: left 12px bottom 12px;
+            background-size: 42px;
+        }
+        .card.background-center {
+            background-position: center;
+            background-size: contain;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+    <div class="modal">
+        <div class="modal-header bb">
+            <button class="btn bl" type="button" onclick="closeModal()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="goals">
+                <label class="goal bb">
+                    <input class="goal-checkbox" type="checkbox">
+                    <span class="goal-score dark">5</span>
+                    <span class="goal-score">5</span>
+                    <span class="goal-text">постройте все дома на определённой улице</span>
+                </label>
+                <label class="goal bb">
+                    <input class="goal-checkbox" type="checkbox">
+                    <span class="goal-score dark">5</span>
+                    <span class="goal-score">5</span>
+                    <span class="goal-text">постройте крайние дома на всех улицах</span>
+                </label>
+                <label class="goal bb">
+                    <input class="goal-checkbox" type="checkbox">
+                    <span class="goal-score dark">5</span>
+                    <span class="goal-score">5</span>
+                    <span class="goal-text">добавте 5 <span class="pink">строений</span> к дому (или домам) на одной улице</span>
+                </label>
+            </div>
+            <div class="cards">
+                <div class="cards-block cards-numbers br">
+                    <div class="card bb" style="background-image: url(assets/fense.png);">9</div>
+                    <div class="card bb" style="background-image: url(assets/fense.png);">2</div>
+                    <div class="card" style="background-image: url(assets/park.png);">13</div>
+                </div>
+                <div class="cards-block cards-effects">
+                    <div class="card background-center bb" style="background-image: url(assets/park.png);"></div>
+                    <div class="card background-center bb" style="background-image: url(assets/bis.png);"></div>
+                    <div class="card background-center" style="background-image: url(assets/pool.png);"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer bt">
+            <button class="btn br" type="button" onclick="prev()">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="btn btn-long" type="button" onclick="next()">Далее <i class="bi bi-chevron-right"></i></button>
+        </div>
+    </div>
+    <div class="modal-background"></div>
+
+    <script>
+        // 1 = pool, 2 = park, 3 = fence, 4 =real estate, 
+        // 5 = temp worker, 6 = bis.
+        let effects = {
+            base: ['','pool','park','fense','agent','worker','bis'],
+        }
+        let cards = [
+            [1,3],
+            [2,3],
+            [3,3],
+            [5,3],
+            [5,3],
+            [6,3],
+            [6,3],
+            [7,3],
+            [8,3],
+            [8,3],
+            [9,3],
+            [10,3],
+            [10,3],
+            [11,3],
+            [11,3],
+            [13,3],
+            [14,3],
+            [15,3],
+            [1,4],
+            [2,4],
+            [4,4],
+            [5,4],
+            [5,4],
+            [6,4],
+            [7,4],
+            [7,4],
+            [8,4],
+            [8,4],
+            [9,4],
+            [9,4],
+            [10,4],
+            [11,4],
+            [11,4],
+            [12,4],
+            [14,4],
+            [15,4],
+            [1,2],
+            [2,2],
+            [4,2],
+            [5,2],
+            [5,2],
+            [6,2],
+            [7,2],
+            [7,2],
+            [8,2],
+            [8,2],
+            [9,2],
+            [9,2],
+            [10,2],
+            [11,2],
+            [11,2],
+            [12,2],
+            [14,2],
+            [15,2],
+            [3,1],
+            [4,1],
+            [6,1],
+            [7,1],
+            [8,1],
+            [9,1],
+            [10,1],
+            [12,1],
+            [13,1],
+            [3,5],
+            [4,5],
+            [6,5],
+            [7,5],
+            [8,5],
+            [9,5],
+            [10,5],
+            [12,5],
+            [13,5],
+            [3,6],
+            [4,6],
+            [6,6],
+            [7,6],
+            [8,6],
+            [9,6],
+            [10,6],
+            [12,6],
+            [13,6],
+        ]
+        let goals = [
+            {
+                num: 1,
+                hard: false,
+                score: [8,4],
+                img: '',
+                text: '3 группы по 3 дома',
+            },
+            {
+                num: 1,
+                hard: false,
+                score: [6,3],
+                img: '',
+                text: '2 группы по 4 дома',
+            },
+            {
+                num: 1,
+                hard: false,
+                score: [8,4],
+                img: '',
+                text: '2 группы по 5 домов',
+            },
+            {
+                num: 1,
+                hard: false,
+                score: [8,4],
+                img: '',
+                text: '4 группы по 2 дома',
+            },
+            {
+                num: 1,
+                hard: false,
+                score: [8,4],
+                img: '',
+                text: '6 групп по 1 дому',
+            },
+            {
+                num: 1,
+                hard: false,
+                score: [10,6],
+                img: '',
+                text: '2 группы по 6 домов',
+            },
+            {
+                num: 2,
+                hard: false,
+                score: [9,5],
+                img: '',
+                text: '1 группа 4 дома и 3 группы по 1 дому', 
+            },
+            {
+                num: 2,
+                hard: false,
+                score: [9,5],
+                img: '',
+                text: '1 группа 4 дома и 1 группа по 5 домов', 
+            },
+            {
+                num: 2,
+                hard: false,
+                score: [11,6],
+                img: '',
+                text: '3 группы по 1 дому и 1 группа 8 домов', 
+            },
+            {
+                num: 2,
+                hard: false,
+                score: [10,6],
+                img: '',
+                text: '1 группа 5 домов и 2 группы по 2 дома', 
+            },
+            {
+                num: 2,
+                hard: false,
+                score: [12,7],
+                img: '',
+                text: '2 группы по 3 дома и 1 группа 4 дома', 
+            },
+            {
+                num: 2,
+                hard: false,
+                score: [8,4],
+                img: '',
+                text: '1 группа 3 дома и 1 группа 6 домов', 
+            },
+            {
+                num: 3,
+                hard: false,
+                score: [7,3],
+                img: '',
+                text: '1 группа 2 дома и 1 группа 5 домов', 
+            },
+            {
+                num: 3,
+                hard: false,
+                score: [13,7],
+                img: '',
+                text: 'по 1 группе в 2, 3, 5 дома', 
+            },
+            {
+                num: 3,
+                hard: false,
+                score: [12,7],
+                img: '',
+                text: 'по 1 группе в 1, 2, 6 дома', 
+            },
+            {
+                num: 3,
+                hard: false,
+                score: [7,3],
+                img: '',
+                text: '1 группа 3 дома и 1 группа 4 дома', 
+            },
+            {
+                num: 3,
+                hard: false,
+                score: [13,7],
+                img: '',
+                text: 'по 1 группе в 1, 4, 5 дома', 
+            },
+            {
+                num: 3,
+                hard: false,
+                score: [11,6],
+                img: '',
+                text: 'по 1 группе в 1, 3 дома и 2 группы по 2 дома', 
+            },
+        ]
+
+        let gameGoals = []
+        let gameCards = []
+
+        let currentEffects = []
+        let currentNumbers = []
+        let history = []
+
+
+        // console.log(cards.length)
+        // console.log(shuffle(cards))
+
+        function shuffle(arr) {
+            let array = Array.from(arr)
+            for (let i = array.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array
+        }
+
+        function getEffect(i) {
+            return effects.base[i]
+        }
+
+        function newGame() {
+            // shuffle and pic goals
+            // shuffle(goals)
+            renderGoals()
+            // shuffle cards
+            gameCards = shuffle(cards)
+            // console.log(gameCards)
+            // first 3 to images column next 3 to column with numbers
+            next()
+            
+        }
+
+        function renderGoals() {
+            let currentGoals = [
+                shuffle(goals.filter(function(item){ return item.num == 1 }))[0],
+                shuffle(goals.filter(function(item){ return item.num == 2 }))[0],
+                shuffle(goals.filter(function(item){ return item.num == 3 }))[0]
+            ]
+
+            document.querySelector('.goals').querySelectorAll('.goal').forEach(function(item,i) {
+                item.innerHTML = `
+                    <input class="goal-checkbox" type="checkbox">
+                    <span class="goal-score dark">${currentGoals[i].score[0]}</span>
+                    <span class="goal-score">${currentGoals[i].score[1]}</span>
+                    <span class="goal-text">№${currentGoals[i].num}) ${currentGoals[i].text}</span>
+                `
+            })
+        }
+
+        function renderCards() {
+            document.querySelector('.cards-numbers').querySelectorAll('.card').forEach(function(item, i) {
+                item.textContent = currentNumbers[i][0]
+                item.style.backgroundImage = `url(assets/${getEffect(currentNumbers[i][1])}.png)`
+            })
+            document.querySelector('.cards-effects').querySelectorAll('.card').forEach(function(item, i) {
+                item.style.backgroundImage = `url(assets/${getEffect(currentEffects[i][1])}.png)`
+            })
+        }
+
+        function next() {
+            // console.log('next')
+            if(currentEffects.length) {
+                history = currentEffects.concat(history)
+            }
+            if(gameCards.length <= 3) {
+                let hisoryTemp = history.splice(0,3)
+                gameCards = gameCards.concat(shuffle(history))
+                history = hisoryTemp
+            }
+            // console.log(gameCards)
+            if(history.length) {
+                currentEffects = currentNumbers
+                currentNumbers = gameCards.splice(0,3)
+            } else {
+                
+                currentEffects = gameCards.splice(0,3)
+                currentNumbers = gameCards.splice(0,3)
+                // console.table(gameCards)
+                // console.log(currentNumbers, currentEffects)
+            }
+            renderCards()
+            // console.log(history)
+        }
+
+        function prev() {
+            // console.log('prev')
+            if(history.length) {
+                gameCards = currentNumbers.concat(gameCards)
+                currentNumbers = currentEffects
+                currentEffects = history.splice(0,3)
+                
+                renderCards()
+            }
+        }
+
+        function closeModal() {
+
+        }
+
+        newGame()
+    </script>
+</body>
+</html>
